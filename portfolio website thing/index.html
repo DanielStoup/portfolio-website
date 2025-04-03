@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daniel Stoup's Portfolio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #1d292b;
+      color: #d8ffef;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #3d3d3d;
+      color: #d8ffef;
+      padding: 20px;
+      font-size: 24px;
+    }
+
+    nav {
+      background: #8d8d8d;
+      padding: 10px;
+    }
+
+    nav a {
+      color: #d8ffef;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    section {
+      display: none;
+      width: 100%;
+      padding: 50px 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      text-align: center;
+    }
+
+    section.active-section {
+      display: block;
+      opacity: 1;
+    }
+
+    h2 {
+      color: #9499a8;
+    }
+
+    .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  padding: 10px;
+}
+
+
+    .gallery img {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border: 3px solid #0937cd;
+      border-radius: 10px;
+    }
+
+    .gallery figcaption {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #d8ffef;
+    }
+
+    footer {
+      background: #8d8d8d;
+      color: #d8ffef;
+      padding: 20px;
+      width: 100%;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    #about {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .profile-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 10px auto;
+    }
+
+    .profile-container img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .profile-container .name-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    .gallery img {
+  width: 100%;
+  max-width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border: 3px solid #d9dadf;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  display: none;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #000;
+}
+
+.lightbox.show {
+  display: flex;
+}
+
+    .contact-link {
+      color: #add8ff;
+      text-decoration: none;
+    }
+    .grid-4x2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-items: center;
+  padding: 10px;
+}
+
+/* When the screen is 768px wide or smaller, switch to 2 columns */
+@media (max-width: 950px) {
+  .grid-4x2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+    .contact-link:hover {
+      color: #1e3a8a;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        font-size: 20px;
+        padding: 15px;
+      }
+
+      nav {
+        padding: 8px;
+      }
+
+      nav a {
+        font-size: 16px;
+        margin: 0 10px;
+      }
+
+      section {
+        padding: 30px 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+    }
+  </style>
+  <script>
+    function showSection(sectionId) {
+      document.querySelectorAll('main section').forEach(section => {
+        section.classList.remove('active-section');
+      });
+
+      const target = document.getElementById(sectionId);
+      if (target) {
+        target.classList.add('active-section');
+        localStorage.setItem('activeSection', sectionId);
+      }
+    }
+
+    window.onload = () => {
+      const lastSection = localStorage.getItem('activeSection') || 'about';
+      showSection(lastSection);
+    };
+  </script>
+</head>
+
+<body>
+  <header>Daniel Stoup</header>
+  <nav>
+    <a onclick="showSection('about')">About Me</a>
+    <a onclick="showSection('pictures')">My Work</a>
+    <a onclick="showSection('certifications')">Certifications</a>
+  </nav>
+  <main>
+    <section id="about" class="active-section">
+      <h2>About Me</h2>
+      <div class="profile-container">
+        <img src="headshot.jpg" alt="Daniel" loading="lazy" />
+        <div class="name-overlay">Daniel Stoup</div>
+      </div>
+      <p class="truncate-text">
+        gfhfg dfj dghj fgtjy tdyjtd jsdy djrst htr hstr htrs htstr hst hrs thrs htrs hsrth srth rsh rth shtsrhsthr...
+      </p>
+      <h3>Contact</h3>
+      <p>Email: <a href="mailto:danielstoup@icloud.com" class="contact-link">danielstoup@icloud.com</a></p>
+    
+    </section>
+
+    <section id="pictures">
+      <h2>Network and Infrastructure Services</h2>
+      <div class="gallery">
+        <figure><img src="Xbox X Apu.jpg" alt="Xbox X Apu" loading="lazy" /><figcaption>Xbox Series X Apu</figcaption><figcaption>Opening a Xbox to fix it overheating</figcaption></figure>
+        <figure><img src="Kali OS.jpg" alt="Kali OS" loading="lazy" /><figcaption>Kali Lunix OS</figcaption><figcaption>Learning and using Kali OS</figcaption></figure>
+        <figure><img src="Adding DNS on a server.jpg" alt="Example Image 3" loading="lazy" /><figcaption>DNS on a Window's server</figcaption><figcaption>Setting up DNS (Domain Name Server)</figcaption></figure>
+        <figure><img src="NAS Online.png" alt="ScreenShot of A working NAS" loading="lazy" /><figcaption>TrueNAS running</figcaption><figcaption>A Network Attached storage that I made junior year</figcaption></figure>
+        <figure><img src="Windows 8 VM.jpg" alt="Windows 8 homepage" loading="lazy" /><figcaption>Windows 8 home page</figcaption><figcaption>Screenshot of Windows 8 on a pc</figcaption></figure>
+        <figure><img src="Linux Lite VM.jpg" alt="Virtualiztion of Linux Lite" loading="lazy" /><figcaption>Linux Lite on a VM</figcaption><figcaption>Linux Lite running on a Windows Virtual Machines</figcaption></figure>
+        </div>      
+      
+      <h2>Computer Science</h2>
+      <div class="gallery">
+        <figure>
+          <a href="https://google.com" target="_blank">
+            <img src="Omnifoods.jpg" alt="Omnifoods photo link" loading="lazy" class="no-lightbox" /></a>
+          <figcaption>Front end development</figcaption><figcaption>Omnifoods website</figcaption>
+<figcaption> !!!</figcaption>
+<figcaption>CHANGE LINK FROM GOOGLE TO WEBSITE</figcaption>
+        </figure>
+        <figure><img src="Omnifoods back code.jpg" alt="OMnifoods code" loading="lazy" /><figcaption>Back end development</figcaption><figcaption>The code for the front end of Omnifoods </figcaption></figure>
+        <figure><img src="Access Ofice 365.jpg" alt="Access work office 365" loading="lazy" /><figcaption>Microsoft Office 365</figcaption><figcaption>Microsoft Access Table</figcaption></figure>
+        </div>
+
+      <h2>Visual Technologies</h2>
+      <div class="gallery">
+        <figure><img src="Raster graphics editing.jpg" alt="Raster Graphics Editing" loading="lazy" /><figcaption>Raster Graphics Editing</figcaption></figure>
+        <figure><img src="Text on path- vector graphics.jpg" alt="Vector Graphics Editing" loading="lazy" /><figcaption>Vector Graphics Editing</figcaption></figure>
+        <figure><img src="Digital illustration.jpg" alt="Digital Illustration" loading="lazy" /><figcaption>Digital Illustration</figcaption></figure>
+        <figure><img src="example4.jpg" alt="Digital Painting" loading="lazy" /><figcaption>Digital Painting</figcaption><figcaption>Caption 2</figcaption></figure>
+        <figure><img src="example5.jpg" alt="3D Modeling/Rigging" loading="lazy" /><figcaption>3D Modeling/Rigging</figcaption><figcaption>Caption 2</figcaption></figure>
+        <figure><img src="example6.jpg" alt="Animation" loading="lazy" /><figcaption>Animation</figcaption><figcaption>Caption 2</figcaption></figure>
+        </div>
+
+      <h2>Electronics Engineering and Fabrication</h2>
+      <div class="gallery">
+        <figure><img src="example1.jpg" alt="AC / DC Concepts" loading="lazy" /><figcaption>AC / DC Concepts</figcaption></figure>
+        <figure><img src="example2.jpg" alt="Ohm's Law" loading="lazy" /><figcaption>Ohm's Law</figcaption></figure>
+        <figure><img src="example3.jpg" alt="Electrical Formulas" loading="lazy" /><figcaption>Electrical Formulas</figcaption></figure>
+        <figure><img src="example4.jpg" alt="Example Image 3" loading="lazy" /><figcaption>Soldering</figcaption></figure>
+        <figure><img src="example5.jpg" alt="Example Image 3" loading="lazy" /><figcaption>Caption 3</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <h2>Certifications</h2>
+      <div class="gallery">
+        <figure><img src="PC Pro Cert.jpg" alt="PC Pro Certification" loading="lazy" /><figcaption>TestOut PC Pro Certification</figcaption></figure>
+        <figure><img src="MOS Excel Cert.png" alt="MOS Excel Certification" loading="lazy" /><figcaption>MOS Associate Excel Certification</figcaption></figure>
+        <figure><img src="Word Cert.jpg" alt="MOS Word Certification" loading="lazy" /><figcaption>MOS Word Certification</figcaption></figure>
+        <figure><img src="certificate3.jpg" alt="MOS PowerPoint Certification" loading="lazy" /><figcaption>MOS PowerPoint Certification</figcaption></figure>
+        <figure><img src="certificate3.jpg" alt="MOS Outlook Certification" loading="lazy" /><figcaption>MOS Outlook Certification</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:danielstoup@icloud.com" class="contact-link">danielstoup@icloud.com</a></p>
+    </section>
+  </main>
+  <footer>&ThinSpace;</footer>
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="Enlarged Image" />
+  </div>
+  
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+  
+    document.querySelectorAll('.gallery img:not(.no-lightbox)').forEach(img => {
+  img.addEventListener('click', () => {
+    lightbox.classList.add('show');
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+  });
+});
+
+  
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('show');
+      lightboxImg.src = '';
+    });
+  </script>
+  
+</body>
+</html>
